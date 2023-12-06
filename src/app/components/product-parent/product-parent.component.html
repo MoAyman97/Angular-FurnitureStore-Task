@@ -1,0 +1,52 @@
+<div class="container">
+   <div class=" ms-3 mb-3 w-25">
+    <label >FilterBy:Name</label>
+    <select class="form-control"[(ngModel)]="listFilter">
+      <option selected disabled hidden>Choose</option>
+      <option  value=0> All</option>
+      <option  value=2> Table</option>
+      <option  value=3> Sofa</option>
+      <option  value=5> Bed</option>
+    </select>
+  </div>
+  <div class=" ms-3 mb-3 w-25">
+    <label >FilterBy:Price</label>
+    <select class="form-control"[(ngModel)]="priceFilter">
+      <option selected disabled hidden>Choose</option>
+      <option  value=0> All</option>
+      <option  value=1> 0~5000</option>
+      <option  value=2> 5000 ~ 15000</option>
+      <option  value=3> 15000 ~ 30000</option>
+    </select>
+  </div>
+  
+  <app-products class="col-sm-9" [listFilterChild]="listFilter" [priceFilterChild]="priceFilter" (newPrdEvent)="cartFun($event)"></app-products>
+  
+
+</div>
+
+<div class="container">
+<caption class="ms-2 h4">Cart</caption>
+ <div class="row m-2">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Count</th>
+        <th scope="col">Total</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart">
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.counter}}</td>
+        <td>{{item.totalprice}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+ </div>
+</div>

@@ -1,0 +1,54 @@
+
+<div class="container">
+  <h5>{{date|date}}</h5>
+
+  <!-- <div class=" mb-3 w-25">
+    <label >FilterBy:</label>
+    <select class="form-control"[(ngModel)]="listFilter">
+      <option selected disabled hidden>Choose</option>
+      <option  value=0> All</option>
+      <option  value=2> Table</option>
+      <option  value=3> Sofa</option>
+      <option  value=5> Bed</option>
+    </select>
+  </div> -->
+  <div class=" position-relative">
+    <button class="btn btn-dark btn-rounded me-2 position-absolute end-0" (click)="showImg()">Buy</button>
+  </div>
+  <div class="mb-3 logo"  *ngIf="toogler">
+    <img [src]="store.logo" style="width: 60px; height: 60px" />
+    <h1 >{{ store.name }}</h1>
+  </div>
+  <div class="mb-3 logo " *ngIf="!toogler">
+    <h4>Thanks for purchasing Mr.{{ clientName}}</h4>
+  </div>
+  
+  <div class="row">
+ 
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-3"*ngFor="let prd of filteredPrd">
+      <img class="img-fluid" src="{{ prd.prdImgUrl }}" alt=""  style="border-radius: 5px;" appPrdCard [routerLink]="['/details',prd.id]"/>
+      <h5>{{ prd.name }}</h5>
+      <h6>{{ prd.price  |currency:'EGP '}}</h6>
+      <ng-container [ngSwitch]="prd.categoryId">
+        <ng-container *ngSwitchCase='2'>Table</ng-container>
+        <ng-container *ngSwitchCase='3'>Sofa</ng-container>
+        <ng-container *ngSwitchCase='5'>Bed</ng-container>
+        <ng-container *ngSwitchDefault='3'>UnKnown</ng-container>
+      </ng-container>
+      <div [ngStyle]="{'color':(prd.quantity>0)?'blue':'red'}">
+        <ng-container *ngIf="prd.quantity>0;else outReference">In Stock</ng-container>
+        <ng-template #outReference>Out of Stock</ng-template>
+      </div>
+      <!-- <p>{{prd.creditCard |creditcard}}</p> -->
+      <p>Qnt:{{prd.quantity}}</p>
+      <button type="button"class="btn btn-dark btn-rounded btn-sm"[disabled]="prd.quantity == 0" (click)="addToCart(prd)">
+        <i class="fa-solid fa-cart-shopping fa-sm" style="color: #e6e9ef"></i> Add To Cart</button>
+      
+        <button type="button"class="btn btn-danger btn-rounded btn-sm ms-4 "[disabled]="prd.quantity == 0" (click)="decreaseCount(prd.id)">
+          Delete</button>
+        <div class="col">
+          <button type="button"class="btn btn-dark btn-rounded btn-sm mt-1 w-100"(click)="prdDetails(prd.id)">Details</button>
+        </div>
+    </div>
+  </div>
+</div>
